@@ -1,10 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import axios from "axios";
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -15,23 +12,25 @@ export default async function handler(
 
   if (!provider || typeof provider !== "string") {
     return res.status(400).json({
-      error: "Missing or invalid provider parameter"
+      error: "Missing or invalid provider parameter",
     });
   }
 
   if (!process.env.MAC_API_KEY) {
     return res.status(500).json({
-      error: "Server configuration error: API key not found"
+      error: "Server configuration error: API key not found",
     });
   }
 
   try {
+    const apiKey = process.env.MAC_API_KEY.trim();
+
     const response = await axios.get(
       `https://reseller.macelectronics.net/api/v1/partner/offers?provider=${provider}`,
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer sk_test_150a11f4-baa9-44fb-bf9c-d03d54b28174`,
+          Authorization: `Bearer ${apiKey}`,
         },
       }
     );
