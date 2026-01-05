@@ -5,28 +5,25 @@ export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
-  if (req.method !== "POST") {
+  if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { to, message } = req.body;
+ const {provider} = req.query;
 
-  if (!to || !message) {
-    return res.status(400).json({ error: "Missing data" });
+  if (!provider) {
+    return res.status(400).json({ error: "Missing data, No provider specified" });
   }
 
   try {
-    await axios.post(
-      "https://apps.mnotify.net/smsapi",
-      {
-        key: process.env.MNOTIFY_KEY,
-        to: to,
-        msg: message,
-        sender_id: "MealMate",
-      },
-      { headers: { "Content-Type": "application/json" } }
+    const response = await axios.get(
+      `https://reseller.macelectronics.net/api/v1/partner/offers?provider=${provider}`,
+      { headers: { "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.MAC_API_KEY}`
+      }
+    }
     );
-    return res.status(200).json({ success: true }); 
+    return res.status(200).json({ success: true , data: response.data }); 
   } catch (error) {
     return res.status(500).json({ error: "SMS failed: " + error });
   }
