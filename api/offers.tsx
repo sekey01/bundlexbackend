@@ -31,7 +31,7 @@ export default async function handler(
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.MAC_API_KEY}`,
+          Authorization: `Bearer sk_test_150a11f4-baa9-44fb-bf9c-d03d54b28174`,
         },
       }
     );
