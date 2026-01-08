@@ -30,6 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       {
         headers: {
           Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
         },
       }
     );
