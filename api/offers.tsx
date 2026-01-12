@@ -23,7 +23,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const apiKey = "sk_test_150a11f4-baa9-44fb-bf9c-d03d54b28174";
+    const apiKey = "sk_live_ad951241-7e2c-4d11-9e42-bb3a08a200fe";
 
     const response = await axios.get(
       `https://reseller.macelectronics.net/api/v1/partner/offers?provider=${provider}`,
