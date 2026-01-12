@@ -40,6 +40,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       data: response.data,
     });
   } catch (error) {
+    console.error("Error fetching offers:", error);
     if (axios.isAxiosError(error) && error.response?.status === 403) {
       return res.status(403).json({
         error: "Authorization failed. Invalid API key.",
